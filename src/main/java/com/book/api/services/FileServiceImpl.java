@@ -1,17 +1,20 @@
 package com.book.api.services;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
 
+@Slf4j
 @Service
 public class FileServiceImpl implements FileService {
 
     @Override
-    public String uploadFile(String path, MultipartFile file) throws IOException {
+    public String uploadFile(String path, MultipartFile file) {
         String filename = file.getOriginalFilename();
 
         String filePath = path + File.separator + filename;
@@ -22,7 +25,14 @@ public class FileServiceImpl implements FileService {
         }
 
         // copy file content to path
-        Files.copy(file.getInputStream(), Paths.get(filePath));
+
+            CompletableFuture.runAsync(() -> {
+                try {
+                    Files.copy(file.getInputStream(), Paths.get(filePath));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
 
         return filename;
     }

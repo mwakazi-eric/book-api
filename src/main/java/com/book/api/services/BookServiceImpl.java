@@ -14,6 +14,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
@@ -73,7 +74,13 @@ public class BookServiceImpl implements BookService {
         String bookCover = book.getBookCover();
         String bookCoverUrl = book.getBookCoverUrl();
         if(file != null) {
-            Files.deleteIfExists(Paths.get(path + File.separator + bookCover));
+            CompletableFuture.runAsync(() -> {
+                try {
+                    Files.deleteIfExists(Paths.get(path + File.separator + book.getBookCover()));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             bookCover = fileService.uploadFile(path, file);
             bookCoverUrl = baseUrl + "/api/v1/file/" + bookCover;
         }

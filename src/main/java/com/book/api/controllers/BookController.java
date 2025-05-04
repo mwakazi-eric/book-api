@@ -16,6 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/books")
+@CrossOrigin
 public class BookController {
 
     private final BookService bookService;
@@ -47,7 +48,7 @@ public class BookController {
     @PutMapping("/update-book/{isbn}")
     public ResponseEntity<BookDto> updateBook(@PathVariable Long isbn,
                                               @RequestPart(required = false) MultipartFile file,
-                                              @RequestPart String bookDtoJson) throws IOException {
+                                              @RequestPart String bookDtoJson) throws IOException{
         if(file== null || file.isEmpty()) file = null;
         BookDto bookDto = getBookDto(bookDtoJson);
         return ResponseEntity.ok(bookService.updateBook(isbn, bookDto, file));
