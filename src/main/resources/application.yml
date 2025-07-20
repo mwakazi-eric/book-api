@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://bookstore-dev-postgres.bookstore-dev.svc.cluster.local:5432/bookstore_dev_db
+    url: jdbc:postgresql://postgres.bookstore-dev.svc.cluster.local:5432/bookstore_dev_db
     username: bookstore_dev_user
     password: bookstore_dev_password
     driver-class-name: org.postgresql.Driver
