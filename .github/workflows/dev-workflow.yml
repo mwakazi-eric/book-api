@@ -40,22 +40,22 @@ jobs:
           docker push mwakazi/bookstore-api:${{ env.GH_VERSION_TAG }}
           docker push mwakazi/bookstore-api:${{ env.GH_VERSION }}
 
-  # rollout-to-k8s:
-  #   runs-on: self-hosted
-  #   needs: build-and-push-docker-image
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v4
+  rollout-to-k8s:
+    runs-on: self-hosted
+    needs: build-and-push-docker-image
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-  #     - name: Setup kubeconfig
-  #       run: |
-  #         mkdir -p ~/.kube
-  #         echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
-  #         chmod 600 ~/.kube/config
+      - name: Setup kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > ~/.kube/config
+          chmod 600 ~/.kube/config
 
-  #     - name: Set new image on deployment
-  #       run: |
-  #         kubectl rollout restart deployment/bookstore-api --namespace=bookstore-dev
-  #     - name: Rollout status
-  #       run: |
-  #         kubectl rollout status deployment/bookstore-api --namespace=bookstore-dev
+      - name: Set new image on deployment
+        run: |
+          kubectl rollout restart deployment/bookstore-api --namespace=bookstore-dev
+      - name: Rollout status
+        run: |
+          kubectl rollout status deployment/bookstore-api --namespace=bookstore-dev
