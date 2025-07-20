@@ -2,7 +2,7 @@ name: Reddit Clone Api - Staging
 
 on:
   push:
-    branches: [main]
+    branches: [master]
 
 jobs:
   build-and-push-docker-image:
