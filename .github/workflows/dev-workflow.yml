@@ -1,4 +1,4 @@
-name: BookStore Api - Staging
+name: BookStore Api - Development Workflow
 
 on:
   push:
@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 6
     env:
-      GH_VERSION_TAG: staging
-      GH_VERSION: staging-${{ github.sha }}
+      GH_VERSION_TAG: dev
+      GH_VERSION: dev-${{ github.sha }}
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 1.21
@@ -55,7 +55,7 @@ jobs:
 
   #     - name: Set new image on deployment
   #       run: |
-  #         kubectl rollout restart deployment/bookstore-api --namespace=bookstore
+  #         kubectl rollout restart deployment/bookstore-api --namespace=bookstore-dev
   #     - name: Rollout status
   #       run: |
-  #         kubectl rollout status deployment/bookstore-api --namespace=bookstore
+  #         kubectl rollout status deployment/bookstore-api --namespace=bookstore-dev
