@@ -23,4 +23,4 @@ project:
   images: /images/   # <-- make sure this directory exists inside the container
 
 base:
-  url: http://localhost:8080
+  url: http://10.176.16.161:30083
