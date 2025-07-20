@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.book.api</groupId>
-	<artifactId>book-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>book-api</name>
-	<description>Book API</description>
+	<artifactId>bookstore-api</artifactId>
+	<version>0.0.1</version>
+	<name>bookstore-api</name>
+	<description>BookStore API</description>
 	<url/>
 	<licenses>
 		<license/>
