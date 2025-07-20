@@ -25,11 +25,11 @@ jobs:
         run: |
           ls target/
       - name: Build Docker image
-        run: docker build -t mwakazi/bookstore-api:${{ env.GH_VERSION_TAG }} .
+        run: docker build -t mwakazi/bookstore-dev-api:${{ env.GH_VERSION_TAG }} .
 
       - name: Docker tag
         run: |
-          docker tag mwakazi/bookstore-api:${{ env.GH_VERSION_TAG }} mwakazi/bookstore-api:${{ env.GH_VERSION }}
+          docker tag mwakazi/bookstore-dev-api:${{ env.GH_VERSION_TAG }} mwakazi/bookstore-dev-api:${{ env.GH_VERSION }}
 
       - name: Push Docker image to Docker Hub
         env:
@@ -37,8 +37,8 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_TOKEN }}
         run: |
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-          docker push mwakazi/bookstore-api:${{ env.GH_VERSION_TAG }}
-          docker push mwakazi/bookstore-api:${{ env.GH_VERSION }}
+          docker push mwakazi/bookstore-dev-api:${{ env.GH_VERSION_TAG }}
+          docker push mwakazi/bookstore-dev-api:${{ env.GH_VERSION }}
 
   rollout-to-k8s:
     runs-on: self-hosted
@@ -55,7 +55,7 @@ jobs:
 
       - name: Set new image on deployment
         run: |
-          kubectl rollout restart deployment/bookstore-api --namespace=bookstore-dev
+          kubectl rollout restart deployment/bookstore-dev-api --namespace=bookstore-dev
       - name: Rollout status
         run: |
-          kubectl rollout status deployment/bookstore-api --namespace=bookstore-dev
+          kubectl rollout status deployment/bookstore-dev-api --namespace=bookstore-dev
