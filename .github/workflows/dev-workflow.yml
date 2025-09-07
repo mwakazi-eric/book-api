@@ -55,7 +55,9 @@ jobs:
 
       - name: Set new image on deployment
         run: |
-          kubectl rollout restart deployment/bookstore-dev-api --namespace=bookstore-dev
+          kubectl set image deployment/bookstore-dev-api \
+            bookstore-dev-api=mwakazi/bookstore-dev-api:${{ env.GH_VERSION }} \
+            --namespace=bookstore-dev
       - name: Rollout status
         run: |
           kubectl rollout status deployment/bookstore-dev-api --namespace=bookstore-dev
